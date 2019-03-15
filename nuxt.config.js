@@ -20,36 +20,29 @@ export default {
    ** Build configuration
    */
   build: {
-    /*
-     ** You can extend webpack config here
-     */
-    extend(
-      config,
-      {
-        isDev,
-        loaders: { vue }
-      }
-    ) {
-      vue.compilerOptions = {
-        modules: [
-          {
-            // strip data-test ids on elements in prod
-            // this currently bugs out for the client bundle
-            preTransformNode(astEl) {
-              const { attrsMap, attrsList } = astEl
-              const tagAttributesForTesting = ['test', 'test-id']
-              tagAttributesForTesting.forEach(attribute => {
-                const dataAttr = `data-${attribute}`
-                if (attrsMap[dataAttr]) {
-                  delete attrsMap[dataAttr]
-                  const index = attrsList.findIndex(x => x.name === dataAttr)
-                  attrsList.splice(index, 1)
-                }
-              })
-              return astEl
+    loaders: {
+      vue: {
+        compilerOptions: {
+          modules: [
+            {
+              // strip data-test ids on elements in prod
+              // this currently bugs out for the client bundle
+              preTransformNode(astEl) {
+                const { attrsMap, attrsList } = astEl
+                const tagAttributesForTesting = ['test', 'test-id']
+                tagAttributesForTesting.forEach(attribute => {
+                  const dataAttr = `data-${attribute}`
+                  if (attrsMap[dataAttr]) {
+                    delete attrsMap[dataAttr]
+                    const index = attrsList.findIndex(x => x.name === dataAttr)
+                    attrsList.splice(index, 1)
+                  }
+                })
+                return astEl
+              }
             }
-          }
-        ]
+          ]
+        }
       }
     }
   }
