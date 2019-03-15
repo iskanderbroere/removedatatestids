@@ -1,22 +1,4 @@
-# removedatatestids
-
-> My impressive Nuxt.js project
-
-## Build Setup
-
-``` bash
-# install dependencies
-$ yarn install
-
-# serve with hot reload at localhost:3000
-$ yarn run dev
-
-# build for production and launch server
-$ yarn run build
-$ yarn start
-
-# generate static project
-$ yarn run generate
-```
-
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+# Steps to reproduce
+- npm run build
+- compare client and server bundle (search for test `testattribute` in `.nuxt/`)
+- data-test attribute is expected to be removed in both, but is only removed in the server bundle
